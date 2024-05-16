@@ -44,26 +44,6 @@ function generatePatterns(possibleStickersColors: string[]) {
   return patterns;
 }
 
-/*const patterns : Pattern[] = [
-  {
-    position: {x:0, y: 0},
-    stickers: [
-      { x: 0, y: 0, color: "red" },
-      { x: 3, y: 0, color: "blue" },
-      { x: 0, y: 3, color: "purple" },
-      { x: 4, y: 3, color: "green" }
-    ]
-  },
-  {
-    position: {x:1, y: 0},
-    stickers: [
-      { x: 0, y: 0, color: "brown" },
-      { x: 3, y: 0, color: "orange" },
-      { x: 0, y: 3, color: "purple" },
-      { x: 4, y: 3, color: "green" }
-    ]
-  }
-];*/
 
 const patterns = generatePatterns(["blue", "green", "purple"]);
 //console.log(patterns)

@@ -1,58 +1,23 @@
-import { useState, useRef } from 'react'
+import { useRef, useState } from 'react'
 import './App.css'
 import CanvasRendering from "./components/canvasRendering";
-import sample from "lodash/sample";
+import usePattern, { Pattern } from "./usePattern";
 
-interface Position  {
-  x: number;
-  y: number;
-}
-
-interface Sticker extends Position {
-  color: string;
-}
-
-interface Pattern {
-  position: Position;
-  stickers: Sticker[];
-}
-
-function generatePattern(x: number, y: number, possibleStickersColors: string[], percentage: number) {
-  let stickers = [];
-  for(let i = 0; i < 10; i++) {
-    for (let j = 0; j < 10; j++) {
-      if(Math.random() > percentage) {
-        stickers.push({ x:i, y:j, color: sample(possibleStickersColors)})
-      }
-    }
-  }
-  return {
-    position: {x, y},
-    stickers
-  };
-}
-
-function generatePatterns(possibleStickersColors: string[]) {
-  let patterns = [];
-  for(let x = 0; x < 4; x++) {
-    for(let y = 0; y < 4; y++) {
-      patterns.push(generatePattern(x, y, possibleStickersColors, 0.5));
-    }
-  }
-  return patterns;
-}
-
-
-const patterns = generatePatterns(["blue", "green", "purple"]);
-//console.log(patterns)
+const colors = ["blue", "red", "green", "purple"];
 
 function App() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const {generatePatterns } = usePattern();
+  const [patterns, setPatterns] = useState<Pattern[]>(generatePatterns(colors));
+
 
   return (
     <div>
       
       <h1>Vite + React</h1>
+      <button onClick={() => setPatterns(generatePatterns(colors)) }>
+        generate
+      </button>
       <CanvasRendering
         ref={canvasRef}
         width={25 * 10 * 4}

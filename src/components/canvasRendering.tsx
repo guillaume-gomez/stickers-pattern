@@ -34,6 +34,8 @@ const CanvasRendering = forwardRef<ExternalActionInterface, CanvasRenderingProps
         return;
       }
 
+      context.clearRect(0, 0, refCanvas.current.width, refCanvas.current.height);
+
       renderPatterns(context, patterns)
       if(hasBorder) {
         renderBorder(context, width, height);

@@ -1,1 +1,1 @@
-# Sticker pattern
+# Stickers pattern

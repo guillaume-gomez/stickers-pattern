@@ -22,12 +22,23 @@ function App() {
     setColors(newColors);
   }
 
+  function randomColor() {
+    return "#" + Math.floor(Math.random()*16777215).toString(16);
+  }
+
+  function random() {
+    setColors([randomColor(), randomColor(), randomColor(), randomColor()]);
+  }
+
   return (
     <div>
       
       <h1>Vite + React</h1>
       <button onClick={() => setPatterns(generatePatterns(colors)) }>
         generate
+      </button>
+       <button onClick={() => random() }>
+          Random
       </button>
       {
         colors.map((color, index) => {

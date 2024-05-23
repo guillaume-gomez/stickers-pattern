@@ -1,3 +1,6 @@
+
+import { useDebounce } from "rooks";
+
 interface ColorInputProps {
     value: string;
     onChange: (newValue: string) => void
@@ -5,14 +8,16 @@ interface ColorInputProps {
 }
 
 function ColorInput({value, onChange, label} : ColorInputProps) {
-    
+    const setValueChanged = useDebounce(onChange, 300);
     return(
         <div>
             <label>{label}</label>
             <input
                 type="color"
                 value={value}
-                onChange={(e) => onChange(e.target.value)}
+                onChange={(e) => {
+                    setValueChanged(e.target.value);
+                }}
             />
         </div>
     );

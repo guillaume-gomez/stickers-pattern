@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import './App.css'
 import CanvasRendering from "./components/canvasRendering";
 import ColorInput from "./components/colorInput";
@@ -12,6 +12,10 @@ function App() {
   const [colors, setColors] = useState<string[]>(COLORS);
   const [patterns, setPatterns] = useState<Pattern[]>(generatePatterns(colors));
 
+  useEffect(() => {
+    setPatterns(generatePatterns(colors));
+  }, [colors])
+
   function updateColor(position: number, newColor: string) {
     const newColors = colors.map((color, index) => {
         if(position === index) {
@@ -21,6 +25,7 @@ function App() {
     });
     setColors(newColors);
   }
+
 
   return (
     <div>

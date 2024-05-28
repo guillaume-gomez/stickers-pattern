@@ -3,6 +3,7 @@ import './App.css'
 import CanvasRendering from "./components/canvasRendering";
 import ColorInput from "./components/colorInput";
 import usePattern, { Pattern } from "./usePattern";
+import { createHueShiftPalette, hslToRgb } from "./colors-generation.ts";
 
 const COLORS = ["#0000FF", "#FF0000", "#00FF00", "#235F78"];
 
@@ -31,6 +32,21 @@ function App() {
   }
 
   function random() {
+    const hslColors = createHueShiftPalette(
+      {
+        base: {
+          l: 55,
+          c: 75,
+          h: Math.random() * 60,
+        },
+        minLightness: 10,
+        maxLightness: 90,
+        hueStep: 12,
+        numberOfColor: 4,
+      }
+    );
+    //console.log(hslColors.map(hsl => hslToRgb(hsl)))
+
     setColors([randomColor(), randomColor(), randomColor(), randomColor()]);
   }
 

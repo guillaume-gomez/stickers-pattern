@@ -35,9 +35,9 @@ function App() {
     const hslColors = createHueShiftPalette(
       {
         base: {
-          l: 55,
-          c: 75,
-          h: Math.random() * 60,
+          l: Math.random() * 100,
+          c: Math.random() * 150,
+          h: Math.random() * 360,
         },
         minLightness: 10,
         maxLightness: 90,
@@ -45,9 +45,9 @@ function App() {
         numberOfColor: 4,
       }
     );
-    //console.log(hslColors.map(hsl => hslToRgb(hsl)))
+    console.log(hslColors)
 
-    setColors([randomColor(), randomColor(), randomColor(), randomColor()]);
+    setColors(hslColors);
   }
 
   return (

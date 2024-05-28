@@ -1,4 +1,6 @@
-interface LshColor {
+import { formatHex } from "culori";
+
+interface LchColor {
   l:number;
   c:number;
   h: number;
@@ -11,7 +13,7 @@ interface RgbColor {
 }
 
 interface HueShiftPaletteOptions {
-  base: LshColor,
+  base: LchColor,
   minLightness: number;
   maxLightness: number;
   hueStep: number;
@@ -29,30 +31,39 @@ function map(n: number, start1:number, end1: number, start2: number, end2: numbe
   return ((n - start1) / (end1 - start1)) * (end2 - start2) + start2;
 }
 
-export function createHueShiftPalette(options: HueShiftPaletteOptions) : LshColor[] {
+export function createHueShiftPalette(options: HueShiftPaletteOptions) : string[] {
   const { base, minLightness, maxLightness, hueStep, numberOfColor } = options;
 
-  let palette = [base];
+  const baseToColoriBase = {...base, mode: "lch"};
+  let palette = [baseToColoriBase];
 
-  for (let i = 1; i < Math.floor(numberOfColor-1); i++) {
+  for (let i = 1; i < (numberOfColor -1); i++) {
     const hueDark = adjustHue(base.h - hueStep * i);
     const hueLight = adjustHue(base.h + hueStep * i);
     const lightnessDark = map(i, 0, 4, base.l, minLightness);
     const lightnessLight = map(i, 0, 4, base.l, maxLightness);
     const chroma = base.c;
 
-    palette = [...palette, {
-      l: lightnessDark,
-      c: chroma,
-      h: hueDark,
-    }];
+    palette = [
+        ...palette,
+        {
+          l: lightnessDark,
+          c: chroma,
+          h: hueDark,
+          mode: "lch"
+        }
+    ];
 
-    palette = [{
-      l: lightnessLight,
-      c: chroma,
-      h: hueLight,
-    }, ...palette];
+    palette = [
+      {
+        l: lightnessLight,
+        c: chroma,
+        h: hueLight,
+        mode: "lch"
+      },
+      ...palette
+    ];
   }
 
-  return palette;
+  return palette.map(color => formatHex(color));
 }
